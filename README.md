@@ -40,8 +40,7 @@ genderplot::gender_plot(TeachingRatings, varname="beauty", lb=-1) #more beautifu
 # professors are female
 genderplot::gender_plot(TeachingRatings, varname="eval") # higher evaluated professors
 # are more often male than female
-To visualize a fish color palette, you can run `fishualize()` and
-specify your choice.
+
 
 ```
 
