@@ -7,7 +7,7 @@ provides more informative plots to investigate gender effects.
 The reasons behind it are described in the paper Thurn, Braas, Berkowitz (in preparation).
 
 
-<img src="README_files/demo_1.png" width="672" />
+<img src="Genderplot_demo1.png" width="672" />
 
 Installation
 ------------
