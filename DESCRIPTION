@@ -1,0 +1,22 @@
+Package: genderplot
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Christian",
+           family = "Thurn",
+           role = c("aut", "cre"),
+           email = "christian.thurn@ifv.gess.ethz.ch",
+           comment = c(ORCID = "0000-0002-5942-3273"))
+Description: What the package does (one paragraph).
+License: `use_gpl3_license()`
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    ggplot2,
+    dplyr,
+    tidyr,
+    car,
+    effsize,
+    magrittr
