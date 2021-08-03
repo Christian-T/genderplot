@@ -53,7 +53,7 @@ Citation
 
 To cite package `genderplot` in publications use:
 
-Thurn, C. M., Braas, T., Berkowitz, M. (2020). Package "genderplot". Availabe at https://github.com/Christian-T/genderplot
+Thurn, C. M., Braas, T., Berkowitz, M. (2021). Package "genderplot". Availabe at https://github.com/Christian-T/genderplot
 
 
 Credits
