@@ -18,7 +18,7 @@ devtools::install_github("Christian-T/genderplot", force = TRUE)
 library(genderplot)
 ```
 
-The gender_plot function will need a column named "*gender*". If your column is named differently, specify `gender = "name_of_gender_column"`. At best, the column contains values with the levels "*female/male*". If the levels are different (e.g., "*f/m*") the function will make use of the recode_gender function from the `gendercodeR` package. You can install it via  `devtools::install_github('ropenscilabs/gendercodeR')`, or you provide a gender column with levels labelled "*female*" and "*male*".
+The gender_plot function will need a column named "*gender*". If your column is named differently, specify `gender = "name_of_gender_column"`. The function checks whether the column contains values with the levels "*female/male*". If the levels are different (e.g., "*f/m*") the function will make use of the `recode_gender` function from the `gendercodeR` package. You can install it via  `devtools::install_github('ropenscilabs/gendercodeR')`, or you provide a gender column with levels labelled "*female*" and "*male*".
 
 Examples
 ================
