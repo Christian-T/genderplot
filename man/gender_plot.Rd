@@ -21,7 +21,7 @@ gender_plot(
 \arguments{
   \item{data}{a data frame in wide format containing at least one (character) column indicating the gender of participants and a second (numeric) column with the variable to investigate.}
   \item{varname}{the variable to investigate (e.g., some achievement score).}
-  \item{gender}{is the name of the column indicating the gender of participants \bold{"gender""}?
+  \item{gender}{is the name of the column indicating the gender of participants \bold{"gender"}?
   If your column is named differently, specify \code{gender = \emph{"name_of_gender_column"}}. The function checks whether the column contains values with the levels \emph{female/male}. If the levels are different (e.g., \emph{f/m}) the function will make use of the \code{recode_gender} function from the \href{https://github.com/ropensci/gendercoder}{gendercoder} package. You can install it via \code{devtools::install_github('ropenscilabs/gendercodeR')}, or you provide a gender column with values labelled \emph{female} and \emph{male}.}
   \item{color}{the color of the dots and lines showing differences at certain percentiles in Cohen's \emph{d}. Default is to black.}
   \item{lb}{lower bound of the Cohen's \emph{d} axis (left). Default is to -0.5. Adjust accordingly, if differences or confidence intervals are large.}
