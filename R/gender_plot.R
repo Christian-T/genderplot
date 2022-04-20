@@ -197,7 +197,7 @@ gender_plot <- function(data, varname, gender="gender",
     ggplot2::theme(axis.text=ggplot2::element_text(size=13),
                    axis.title = ggplot2::element_text(size=14),
                    title = ggplot2::element_text(size=14))+
-    ggplot2::labs(caption = paste0("Overlap: η (Reiser & Faraggi) = ", round(ov_Reiser,2),", ή (Pastore) = " ,round(ov_Pastore,2),", Bayesian (Makowski et al.) = ",round(ov_Bayes,2)))
+    ggplot2::labs(caption = paste0("Overlap: eta (Reiser & Faraggi) = ", round(ov_Reiser,2),", eta_hat (Pastore) = " ,round(ov_Pastore,2),", Bayesian (Makowski et al.) = ",round(ov_Bayes,2)))
 
 
 }
