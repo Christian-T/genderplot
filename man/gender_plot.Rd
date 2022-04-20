@@ -23,9 +23,9 @@ gender_plot(
   \item{varname}{the variable to investigate (e.g., some achievement score).}
   \item{gender}{is the name of the column indicating the gender of participants \bold{"gender"}?
   If your column is named differently, specify \code{gender = \emph{"name_of_gender_column"}}. The function checks whether the column contains values with the levels \emph{female/male}. If the levels are different (e.g., \emph{f/m}) the function will make use of the \code{recode_gender} function from the \href{https://github.com/ropensci/gendercoder}{gendercoder} package. You can install it via \code{devtools::install_github('ropenscilabs/gendercodeR')}, or you provide a gender column with values labelled \emph{female} and \emph{male}.}
-  \item{color}{the color of the dots and lines showing differences at certain percentiles in Cohen's \emph{d}. Default is to black.}
-  \item{lb}{lower bound of the Cohen's \emph{d} axis (left). Default is to -0.5. Adjust accordingly, if differences or confidence intervals are large.}
-  \item{ub}{upper bound of the Cohen's \emph{d} axis (left). Default is to +1.0. Adjust accordingly, if differences or confidence intervals are large.}
+  \item{color}{the color of the dots and lines showing differences at certain percentiles in Cohens \emph{d}. Default is to black.}
+  \item{lb}{lower bound of the Cohens \emph{d} axis (left). Default is to -0.5. Adjust accordingly, if differences or confidence intervals are large.}
+  \item{ub}{upper bound of the Cohens \emph{d} axis (left). Default is to +1.0. Adjust accordingly, if differences or confidence intervals are large.}
   \item{varname_title}{variable name used in title of plot. Default is to varname. Format as character.}
 }
 
@@ -37,7 +37,7 @@ The function also lists three overlap indices (see Magnusson, 2020; Makowski et 
 }
 \references{
 
-Magnusson, K. (2020). Interpreting Cohen's d effect size: An interactive visualization 
+Magnusson, K. (2020). Interpreting Cohens d effect size: An interactive visualization 
 (Version 2.4.2) [Web App]. R Psychologist. https://rpsychologist.com/cohend/
 
 Makowski, D., Ben-Shachar, M., & Lüdecke, D. (2019). bayestestR: Describing Effects and 
