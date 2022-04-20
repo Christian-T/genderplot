@@ -26,21 +26,23 @@
 #' # are more often male than female
 
 
-
-
-
 gender_plot <- function(data, varname, gender="gender",
                         color =NA,  lb=NA, ub=NA, varname_title=NA){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {"The `ggplot2` package is not installed but required. You can install it using install.packages('ggplot2')"}
   if (!requireNamespace("dplyr", quietly = TRUE)) {"The `dplyr` package is not installed but required. You can install it using install.packages('dplyr')"}
   if (!requireNamespace("tidyr", quietly = TRUE)) {"The `tidyr` package is not installed but required. You can install it using install.packages('tidyr')"}
-
+  if (!requireNamespace("see", quietly = TRUE)) {"The `see` package is not installed but required. You can install it using install.packages('see')"}
+  if (!requireNamespace("bayestestR", quietly = TRUE)) {"The `bayestestR` package is not installed but required. You can install it using install.packages('bayestestR')"}
+  if (!requireNamespace("overlapping", quietly = TRUE)) {"The `overlapping` package is not installed but required. You can install it using install.packages('overlapping')"}
+  
+  
   requireNamespace("ggplot2"); requireNamespace("tidyr"); requireNamespace("dplyr");
-
+  requireNamespace("see"); requireNamespace("bayestestR"); requireNamespace("overlapping");
+  
 
 
   if(is.na(varname_title)) varname_title <- varname
-  if(is.na(color)){color <- "#B9001EFF" }
+  if(is.na(color)){color <- "black"} #"#B9001EFF" 
   if(is.na(lb)){lb <- -0.5}
   if(is.na(ub)){ub <- 1 }
   data <- as.data.frame(data)
@@ -66,7 +68,7 @@ gender_plot <- function(data, varname, gender="gender",
   tmp$gender <- factor(tmp$gender, levels=c("male","female"),
                        ordered=TRUE)
 
-  breaks_left <- c(0,.10, .25, .49)  ## you could set these breaks differently
+  breaks_left <- c(0,.10, .25, .49)  
   breaks_right <- c(.51, .75,.90,1)
 
 
@@ -116,6 +118,23 @@ gender_plot <- function(data, varname, gender="gender",
   dd3 <- dd2 %>%
     dplyr::select(percentile, Nsum_boys, Nsum_girls) %>%
     tidyr::pivot_longer(-percentile)
+  
+  # Overlap measures
+  
+  Y <- data.frame(tmp)[tmp$gender == "female", "Sum"]  # 1 = FEMALE = Y
+  X <- data.frame(tmp)[tmp$gender == "male", "Sum"]
+  
+  d_obs <- (mean(X)- mean(Y)) / (sqrt( (((sd(X)^2) + (sd(Y)^2))) /2 ))
+  
+  ##overlap_Bayes 
+  ov_Bayes <- bayestestR::overlap(X,Y, method_density="KernSmooth",
+                                  method_auc = "spline")
+  ##overlap_Reiser 
+  ov_Reiser <- 2* pnorm( - abs(d_obs) / 2)
+  ##overlap_Pastore
+  ov_Pastore <- overlapping::overlap(list(X,Y))$OV 
+  
+  
 
   # for plotting distributions
   tmp$section1 <- NA; tmp$section2 <- NA
@@ -141,27 +160,32 @@ gender_plot <- function(data, varname, gender="gender",
   ggplot2::ggplot(data=dd, ggplot2::aes(x=percentile,y=d))+
     ggplot2::geom_hline(yintercept=0)+
     ggplot2::geom_hline(yintercept=(1/4)+.5, linetype="dashed", col="grey65")+
-    geom_flat_violin(data=tmp[tmp$gender== "female", ], ggplot2::aes(x=percentile, y = Sum_z, group=factor(percentile)), fill="red",  col=NA,size=.7,width=.2, alpha = 0.2)+
-    geom_flat_violin(data=tmp[tmp$gender== "male", ], ggplot2::aes(x=percentile, y = Sum_z, group=factor(percentile)), fill="blue", col=NA, size=.7,width=.2, alpha = 0.2) +
+    #geom_flat_violin(data=tmp[tmp$gender== "female" , ], ggplot2::aes(x=percentile, y = Sum_z, group=factor(percentile)), fill="#D95F02",  col=NA,size=.7,width=.2, alpha = 0.2)+
+    #geom_flat_violin(data=tmp[tmp$gender== "male", ], ggplot2::aes(x=percentile, y = Sum_z, group=factor(percentile)), fill="#1B9E77", col=NA, size=.7,width=.2, alpha = 0.2) +
+    see::geom_violinhalf(data=tmp[tmp$gender=="female" & tmp$percentile < .50,], flip=TRUE, ggplot2::aes(x=percentile, y= Sum_z, group=factor(percentile)), fill="#D95F02", col=NA, size=.7, width=0.2, alpha=0.2)+
+    see::geom_violinhalf(data=tmp[tmp$gender=="male" & tmp$percentile < .50,], flip=TRUE, ggplot2::aes(x=percentile, y= Sum_z, group=factor(percentile)), fill="#1B9E77", col=NA, width=0.2, alpha=0.2)+
+    see::geom_violinhalf(data=tmp[tmp$gender=="female" & tmp$percentile > .50,], ggplot2::aes(x=percentile, y= Sum_z, group=factor(percentile)), fill="#D95F02", col=NA, size=.7, width=0.2, alpha=0.2)+
+    see::geom_violinhalf(data=tmp[tmp$gender=="male" & tmp$percentile > .50,], ggplot2::aes(x=percentile, y= Sum_z, group=factor(percentile)), fill="#1B9E77", col=NA, width=0.2, alpha=0.2)+
+    
     ggplot2::geom_errorbar(  ggplot2::aes( ymin=d_low, ymax=d_high),position=pd,
                     colour="grey35", width=.02, alpha=.4) +
     ggplot2::geom_line(data=dd2, ggplot2::aes(x=percentile, y=(MF_ratio/4)+.5), col="grey65" )+
     ggplot2::geom_point(col=color, size=2.5, position=pd, alpha=.7)+
     ggplot2::geom_line(col=color,size=.9,linetype="solid", position=pd, alpha=.7)+
     ggplot2::geom_text(data=dd2, ggplot2::aes(x=label_pos, y=-.4, label=Nsum_boys),
-              col="#66D9DC")+
+              col="#1B9E77")+
     ggplot2::geom_text(data=dd2, ggplot2::aes(x=label_pos, y=-.48, label=Nsum_girls),
-              col="#FBADA7")+
+              col="#D95F02")+
     ggplot2::geom_text(data=dd2, ggplot2::aes(x=0.00, y=-.44, label="N ="))+
     ggplot2::geom_text(data=dd2, ggplot2::aes(x=percentile, y=(MF_ratio/4)+.5, label=MF_ratio),
               col="grey55", fontface="bold")+
     ggplot2::geom_label(ggplot2::aes(.22,1.25, label="Differences in favor of boys"),
-               col="gray30", fill="#66D9DC", size=2.5)+
+               col="gray30", fill="#1B9E77", size=2.5)+
     ggplot2::geom_label(ggplot2::aes(.22,-1.25, label="Differences in favor of girls"),
-               col="gray30", fill="#FBADA7", size=2.5)+
+               col="gray30", fill="#D95F02", size=2.5)+
     ggplot2::theme_bw()+
-    ggplot2::scale_color_manual(guide=FALSE, values=color)+
-    ggplot2::ggtitle(paste("Differences across percentiles for",varname_title))+
+    ggplot2::scale_color_manual(guide="none", values=color)+
+    ggplot2::ggtitle(paste("Gender effects across percentiles for",varname_title))+
     #   labs(subtitle="Colored points: Differences in Cohen's d and 95% CI; Grey: Male/female ratio (second y-axis); \nbottom: sample size per percentile (red:girls; blue: boys)")+
     ggplot2::scale_y_continuous(name=" \t Cohen's d", limits=c(lb, ub), breaks=seq(lb,0.5, ub-0.5),  sec.axis=ggplot2::sec_axis( ~(.*4)-2,
                                                                                                                breaks=c(0,1,2,3),
@@ -172,7 +196,9 @@ gender_plot <- function(data, varname, gender="gender",
           axis.title.y = ggplot2::element_text(hjust=.33))+
     ggplot2::theme(axis.text=ggplot2::element_text(size=13),
                    axis.title = ggplot2::element_text(size=14),
-                   title = ggplot2::element_text(size=14))
+                   title = ggplot2::element_text(size=14))+
+    ggplot2::labs(caption = paste0("Overlap: η (Reiser & Faraggi) = ", round(ov_Reiser,2),", ή (Pastore) = " ,round(ov_Pastore,2),", Bayesian (Makowski et al.) = ",round(ov_Bayes,2)))
 
 
 }
+

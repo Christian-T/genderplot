@@ -2,7 +2,10 @@
 % Please edit documentation in R/gender_plot.R
 \name{gender_plot}
 \alias{gender_plot}
-\title{Plotting function for more comprehensible gender effects}
+\title{Plotting Function for More Comprehensible Gender Effects}
+\description{
+Plotting function for more comprehensible gender effects
+}
 \usage{
 gender_plot(
   data,
@@ -14,8 +17,39 @@ gender_plot(
   varname_title = NA
 )
 }
-\description{
-Plotting function for more comprehensible gender effects
+
+\arguments{
+  \item{data}{a data frame in wide format containing at least one (character) column indicating the gender of participants and a second (numeric) column with the variable to investigate.}
+  \item{varname}{the variable to investigate (e.g., some achievement score).}
+  \item{gender}{is the name of the column indicating the gender of participants \bold{"gender""}?
+  If your column is named differently, specify \code{gender = \emph{"name_of_gender_column"}}. The function checks whether the column contains values with the levels \emph{female/male}. If the levels are different (e.g., \emph{f/m}) the function will make use of the \code{recode_gender} function from the \href{https://github.com/ropensci/gendercoder}{gendercoder} package. You can install it via \code{devtools::install_github('ropenscilabs/gendercodeR')}, or you provide a gender column with values labelled \emph{female} and \emph{male}.}
+  \item{color}{the color of the dots and lines showing differences at certain percentiles in Cohen's \emph{d}. Default is to black.}
+  \item{lb}{lower bound of the Cohen's \emph{d} axis (left). Default is to -0.5. Adjust accordingly, if differences or confidence intervals are large.}
+  \item{ub}{upper bound of the Cohen's \emph{d} axis (left). Default is to +1.0. Adjust accordingly, if differences or confidence intervals are large.}
+  \item{varname_title}{variable name used in title of plot. Default is to varname. Format as character.}
+}
+
+
+\details{
+This function forms a comprehensible plot of gender effects across the percentiles of a distribution. The function informs about gender effects at the 10th, 25th, 49th, 51st, 75th and 90th percentile. The function shows 1.) the difference's between genders expressed in Cohen's \emph{d} with a 95\% confidence interval, 2.) the male to female ratio (including numerical values), 3.) the number of males and females, and 4.) the form of the distribution.
+The function also lists three overlap indices (see Magnusson, 2020; Makowski et al., 2019; Pastore, 2018; Reiser & Faraggi, 1999).
+
+}
+\references{
+
+Magnusson, K. (2020). Interpreting Cohen's d effect size: An interactive visualization 
+(Version 2.4.2) [Web App]. R Psychologist. https://rpsychologist.com/cohend/
+
+Makowski, D., Ben-Shachar, M., & Lüdecke, D. (2019). bayestestR: Describing Effects and 
+their Uncertainty, Existence and Significance within the Bayesian Framework. Journal 
+of Open Source Software, 4(40), 1541. https://doi.org/10.21105/joss.01541
+	
+Pastore, M. (2018). Overlapping: a R package for estimating overlapping in empirical 
+distributions. Journal of Open Source Software, 3(32), 1023. https://doi.org/10.21105/joss.01023
+
+Reiser, B., & Faraggi, D. (1999). Confidence intervals for the overlapping coefficient: the 
+normal equal variance case. Journal of the Royal Statistical Society: Series D (the Statistician), 48(3), 413--418. http://doi.org/10.1111/1467-9884.00199
+
 }
 \examples{
 library(AER)
