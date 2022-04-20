@@ -32,8 +32,8 @@ genderplot::gender_plot(PhDPublications, varname="prestige", lb=-1) #need to adj
 # to depict larger gender differences
 
 data(STAR) #data on effect of reducing class size on test scores in the early grades
-genderplot::gender_plot(STAR, varname="read1") #read1 = reading in first grade
-genderplot::gender_plot(STAR, varname="math3") #math3= math in 3rd grade
+genderplot::gender_plot(STAR[!is.na(STAR$read1),], varname="read1") #read1 = reading in first grade
+genderplot::gender_plot(STAR[!is.na(STAR$math3),], varname="math3") #math3= math in 3rd grade
 
 data("TeachingRatings") #Data on course evaluations, course characteristics,
 # and professor characteristics (beauty)
