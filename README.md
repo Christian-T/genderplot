@@ -18,7 +18,7 @@ devtools::install_github("Christian-T/genderplot", force = TRUE)
 library(genderplot)
 ```
 
-The gender_plot function will need a column named "*gender*". If your column is named differently, specify `gender = "name_of_gender_column"`. The function checks whether the column contains values with the levels "*female/male*". If the levels are different (e.g., "*f/m*") the function will make use of the `recode_gender` function from the `gendercodeR` package. You can install it via  `devtools::install_github('ropenscilabs/gendercodeR')`, or you provide a gender column with levels labelled "*female*" and "*male*".
+The gender_plot function will need a column named "*gender*". If your column is named differently, specify `gender = "name_of_gender_column"`. The function checks whether the column contains values with the levels "*female/male*". If the levels are different (e.g., "*f/m*") the function will make use of the `recode_gender` function from the `gendercoder` package. You can install it via  `devtools::install_github('ropenscilabs/gendercoder')`, or you provide a gender column with levels labelled "*female*" and "*male*".
 
 Examples
 ================
@@ -61,4 +61,5 @@ Thurn, C. M., Braas, T., Berkowitz, M. (2021). Package "genderplot". Availabe at
 Credits
 -------
 
-The functions for split violin plots come from  David Robinson: <https://gist.github.com/dgrtwo/eb7750e74997891d7c20>
+The function for half violin plots come from the see package https://easystats.github.io/see/reference/geom_violinhalf.html
+The function for gender coding comes from the gendercoder package https://github.com/ropensci/gendercoder
